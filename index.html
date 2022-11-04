@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>index.html</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/qiniu-js@2.5.1/dist/qiniu.min.js"></script>
+  </head>
+
+  <body>
+    <h1>测试七牛云上传图片</h1>
+    <form action="upload" method="post" enctype="multipart/form-data">
+      <input class="file-input" type="file" id="select" />
+    </form>
+    <div id="result"></div>
+    <button onclick="clickButton()">请求图片</button>
+    <div id="pics"></div>
+    <script type="text/javascript">
+      var result
+      var fileName
+      var domain = ''
+
+      var complete = function (res) {
+        let src = 'http://' + result.domain + '/' + fileName
+        $('#result').html('<img src=' + src + ' />')
+      }
+
+      var subObject = {
+        //                next: next,
+        //                error: error,
+        complete: complete,
+      }
+
+      $.ajax({
+        type: 'get',
+        url: 'http://192.168.0.130:3000/api/uptoken',
+        async: true,
+        success: function (res) {
+          result = res
+        },
+      })
+
+      $('#select').on('change', function () {
+        var file = this.files[0]
+        fileName = 'image/test/' + file.name
+        var token = result.uptoken
+        var domain = result.domain
+        var config = {
+          useCdnDomain: true,
+          disableStatisticsReport: false,
+          retryCount: 6,
+          region: qiniu.region.z2,
+        }
+        var putExtra = {
+          fname: '',
+          params: {},
+          mimeType: null,
+        }
+        var observable = qiniu.upload(file, fileName, token, putExtra, config)
+
+        var subscription = observable.subscribe(subObject)
+      })
+      var marker = ''
+      function clickButton() {
+        $.ajax({
+          type: 'get',
+          url: 'http://192.168.0.130:3000/api/getImg',
+          async: true,
+          data: {
+            marker: marker,
+          },
+          success: function (res) {
+            var items = res.items
+            marker = res.marker
+            var html = ''
+            items.forEach(function (val, index) {
+              html += '<img src=' + domain + val.key + ' />'
+            })
+            $('#pics').html(html)
+          },
+        })
+      }
+    </script>
+  </body>
+</html>

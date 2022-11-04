@@ -1,0 +1,42 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\Program Files (x86)\Java\jdk1.8.0_144\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;E:\SVN\bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_131\bin;C:\Program Files\nodejs\;E:\wamp\bin\mysql\mysql5.6.17\bin;C:\Program Files (x86)\Egret\Egret Wing 3\bin;C:\Users\Administrator\AppData\Roaming\npm;E:\软件\Microsoft VS Code\bin;D:\MongoDB\Server\4.0\bin;C:\Users\Administrator\AppData\Local\Programs\Fiddler;C:\Users\Administrator\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  8.11.3
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "dependencies": {
+      "body-parser": "^1.18.3",
+      "cookie-parser": "^1.4.3",
+      "express": "^4.16.3",
+      "express-session": "^1.15.6",
+      "fs": "0.0.1-security",
+      "jsonwebtoken": "^8.3.0",
+      "multer": "^1.4.1",
+      "mysql": "^2.16.0",
+      "path": "^0.12.7",
+      "socket.io": "^2.2.0"
+    },
+    "scripts": {
+      "start": "node app.js"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: https://registry.npm.taobao.org/mime-db/download/mime-db-1.42.0.tgz: ENOENT: no such file or directory, open 'C:\Users\Administrator\AppData\Local\Yarn\cache\v1\npm-mime-db-1.42.0-3e252907b4c7adb906597b4b65636272cf9e7bac\HISTORY.md'
