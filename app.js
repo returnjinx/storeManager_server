@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const { expressjwt } = require('express-jwt');
+const { secretKey } = require('./plugin/constant');
+// 全局验证Token是否合法
+const tokens = require('./plugin/token');
 const app = express();
-
 app.use(cookieParser('secret'));
 app.use(express.static(__dirname));
 
@@ -27,6 +30,18 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+//token验证逻辑
+app.use(tokens);
+
+// 如果token过期或者 错误的处理
+app.use(function (err, req, res, next) {
+  console.log(err)
+  if (err.name === 'UnauthorizedError') {
+    console.log('错误')
+    //  这个需要根据自己的业务逻辑来处理（ 具体的err值 请看下面）
+    res.status(401).send('非法token');
+  }
+});
 
 app.all('*', function (req, res, next) {
   if (req.headers.origin == 'http://www.hellojinx.cn' || req.headers.origin == 'http://hellojinx.cn') {
@@ -43,6 +58,9 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
 
   next();
+});
+app.use((err, req, res, next) => {
+  console.log(err);
 });
 
 routes(app);
